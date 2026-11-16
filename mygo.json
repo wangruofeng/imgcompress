@@ -2,7 +2,7 @@
   "name": "ImgCompress",
   "slug": "imgcompress",
   "identifier": "com.wangruofeng007.imgcompress",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "devUrl": "http://127.0.0.1:5173",
   "devCommand": "npm run dev:web",
   "buildCommand": "npm run build:web",

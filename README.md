@@ -6,7 +6,7 @@
 
 [下载 v0.1.3 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/imgcompress-0.1.3-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.1.3) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/SHA256SUMS.txt)
 
-以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.1 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
+以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.2 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
 
 适用于 Apple Silicon Mac（M 系列芯片），最低 macOS 12。当前安装包使用 ad-hoc 签名，尚未通过 Apple Developer ID 签名与公证。
 
@@ -39,7 +39,7 @@
 1. 拖入图片或点击「添加图片」，支持多选和 ⌘O。
 2. 选择格式、质量和最大宽度，点击「开始处理」。
 3. 点击缩略图查看原图和处理结果。
-4. 点击「导出 ZIP」，首次选择保存文件夹。所有已完成图片打包成一个 ZIP，保存后可点击文件夹图标定位压缩包。失败或未完成图片不会加入。
+4. 点击「导出 ZIP」，首次选择保存文件夹。所有已完成图片打包成一个 ZIP，导出成功后自动打开 Finder 并选中 ZIP，之后也可点击文件夹图标再次定位。失败或未完成图片不会加入。
 
 应用默认保留输入文件。仅输出一个 `ImgCompress-日期-时间.zip`；包内图片名为 `原名-compressed.真实扩展名`，重名追加 `-1`、`-2`。取消打包会清理临时 ZIP，不导出散图。更改设置会清除当前处理结果，需要重新处理，已保存文件保持不变。
 

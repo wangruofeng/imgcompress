@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createCompressor } from './compress';
 import { resolveParallelism } from './parallelism';
 import { runConcurrent } from './concurrent';
-import { beginZip, addToZip, finishZip, cancelZip } from './desktop';
+import { beginZip, addToZip, finishZip, cancelZip, reveal } from './desktop';
 import { type ImageItem, type Settings } from './types';
 
 function release(item: ImageItem) {
@@ -112,7 +112,10 @@ export function useQueue() {
         const ids = new Set(ready.map(item => item.id));
         update(rows => rows.map(item => ids.has(item.id) ? { ...item, savedPath: path } : item));
         const skipped = current.current.length - ready.length;
-        setNotice(`已保存 1 个 ZIP 压缩包，包含 ${ready.length} 张图片。${skipped ? `${skipped} 张未完成或失败的图片未加入。` : ''}`);
+        const message = `已保存 1 个 ZIP 压缩包，包含 ${ready.length} 张图片。${skipped ? `${skipped} 张未完成或失败的图片未加入。` : ''}`;
+        setNotice(message);
+        try { await reveal(path); }
+        catch (error) { setNotice(`${message}自动打开 Finder 失败：${error instanceof Error ? error.message : '请点击文件夹图标查看'}`); }
       }
     } catch (error) {
       setNotice(`打包失败：${error instanceof Error ? error.message : '无法保存压缩包'}。已处理图片保留，可以重试。`);
