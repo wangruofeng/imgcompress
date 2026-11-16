@@ -16,19 +16,19 @@ v0.2.4 支持 JPG、PNG、WebP、AVIF、SVG、GIF 和 APNG，并提供最高 16 
 
 支持七种常用图片格式，可设置输出格式、质量、尺寸及最高 16 路并发，处理全程在本机完成。
 
-![ImgCompress Mac 浅色主界面与处理设置](docs/screenshots/main-light.png)
+![ImgCompress Mac 浅色主界面与处理设置](docs/screenshots/main-light-v0.2.4.png)
 
 ### 批量压缩 · 深色模式
 
 查看每张图片处理前后的体积、单张与累计处理耗时，完成后统一导出一个 ZIP 压缩包。
 
-![ImgCompress Mac 深色模式下的批量压缩结果与 ZIP 导出](docs/screenshots/batch-dark.png)
+![ImgCompress Mac 深色模式下的批量压缩结果与 ZIP 导出](docs/screenshots/batch-dark-v0.2.4.png)
 
 ### 原图与结果对比
 
 点击图片可预览处理前后的效果和文件大小。
 
-![ImgCompress Mac 图片处理前后对比预览](docs/screenshots/preview-dark.png)
+![ImgCompress Mac 图片处理前后对比预览](docs/screenshots/preview-dark-v0.2.4.png)
 
 截图来自 v0.2.4 代码构建的实际 Mac 原生窗口，使用专门制作的示例图片；压缩比例与耗时仅代表截图中的样本。
 
