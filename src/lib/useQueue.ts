@@ -15,7 +15,7 @@ export function useQueue() {
   const [elapsedMs,setElapsedMs] = useState(0);
   const [now,setNow] = useState(0);
   const [items, setItems] = useState<ImageItem[]>([]);
-  const [parallelism, setParallelism] = useState(2);
+  const [parallelism, setParallelism] = useState(1);
   const [busy, setBusy] = useState<'process' | 'export' | null>(null);
   const [notice, setNotice] = useState('');
   const [exportProgress, setExportProgress] = useState({ done: 0, total: 0 });
@@ -77,7 +77,7 @@ export function useQueue() {
     timer.start();
     lock.current = true; stopped.current = false; setBusy('process'); setNotice('');
     const controller = new AbortController();
-    const limit = resolveParallelism(settings.parallelism,navigator.hardwareConcurrency);
+    const limit = resolveParallelism(settings.parallelism,navigator.hardwareConcurrency,todo.length);
     setParallelism(limit);
     const session = createCompressor(limit);
     cancelCompression.current = () => { controller.abort(); session.dispose(); };
