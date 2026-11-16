@@ -4,13 +4,14 @@ import { ImageRow } from './components/ImageRow';
 import { Preview } from './components/Preview';
 import { SettingsPanel } from './components/SettingsPanel';
 import { chooseOutput, isDesktop, reveal } from './lib/desktop';
+import { parseParallelism } from './lib/parallelism';
 import { defaults, size, type Settings } from './lib/types';
 import { useQueue } from './lib/useQueue';
 
 function readSettings(): Settings {
   try {
     const saved: unknown = JSON.parse(localStorage.getItem('settings') ?? 'null');
-    if (saved && typeof saved === 'object' && 'quality' in saved && 'format' in saved && 'maxWidth' in saved && 'lossless' in saved && typeof saved.quality === 'number' && saved.quality >= 0.1 && saved.quality <= 1 && ['auto', 'image/jpeg', 'image/png', 'image/webp', 'image/avif'].includes(String(saved.format)) && [0, 800, 1280, 1920, 2560].includes(Number(saved.maxWidth)) && typeof saved.lossless === 'boolean') return saved as Settings;
+    if (saved && typeof saved === 'object' && 'quality' in saved && 'format' in saved && 'maxWidth' in saved && 'lossless' in saved && typeof saved.quality === 'number' && saved.quality >= 0.1 && saved.quality <= 1 && ['auto', 'image/jpeg', 'image/png', 'image/webp', 'image/avif'].includes(String(saved.format)) && [0, 800, 1280, 1920, 2560].includes(Number(saved.maxWidth)) && typeof saved.lossless === 'boolean') return {...saved as Settings,parallelism:parseParallelism('parallelism' in saved?saved.parallelism:undefined)};
   } catch (error) { console.warn('无法读取设置', error); }
   return defaults;
 }
@@ -44,7 +45,8 @@ export default function App() {
   }, [busy, preview]);
   function change(next: Settings) {
     if (busy) return;
-    queue.invalidate(); setSettings(next);
+    if(next.quality!==settings.quality||next.format!==settings.format||next.maxWidth!==settings.maxWidth||next.lossless!==settings.lossless)queue.invalidate();
+    setSettings(next);
     try { localStorage.setItem('settings', JSON.stringify(next)); } catch (error) { console.warn('无法保存设置', error); }
   }
   async function selectOutput() {
@@ -72,7 +74,7 @@ export default function App() {
     </section><SettingsPanel settings={settings} change={change} disabled={busy} output={output} choose={() => void selectOutput()}/></main>
     {queue.notice && <div className="notice" role="status"><span>{queue.notice}</span><button className="icon-button" onClick={() => queue.setNotice('')} aria-label="关闭提示"><X size={14}/></button></div>}
     {!isDesktop() && <div className="browser-note">当前为网页预览；保存到文件夹和 Finder 功能请在 Mac 应用中使用。</div>}
-    <footer className="app-footer"><div className="totals">{done.length ? <><strong>{size(before)} <ArrowRight size={14}/> {size(after)}</strong><span>{saving > 0 ? <>共节省 <em>{size(saving)}</em>{before > 0 && ` · ${(saving / before * 100).toFixed(1)}%`}</> : '转换已完成，结果可导出'}</span></> : <><strong>准备好，轻装出发。</strong><span>添加图片后，点击开始处理</span></>}</div><div className="footer-actions">{queue.busy ? <><div className="progress-wrap"><span>{queue.busy === 'export' ? `正在打包 ZIP · ${queue.exportProgress.done} / ${queue.exportProgress.total}` : `并发处理中 · ${done.length} / ${queue.items.length}`}</span><progress max={Math.max(1, queue.busy === 'export' ? queue.exportProgress.total : queue.items.length)} value={queue.busy === 'export' ? queue.exportProgress.done : queue.items.filter(item => item.status === 'done' || item.status === 'error').length}/></div><button className="button secondary" onClick={queue.stop}><Square size={13}/>停止</button></> : <><button className="button secondary" disabled={!queue.items.length || !waiting || choosing} onClick={() => void queue.run(settings)}>{queue.items.some(item => item.status === 'error') ? '重试未完成' : done.length && waiting ? '继续处理' : '开始处理'}<ArrowRight size={15}/></button><button className="button primary" disabled={!unsaved.length || choosing || !isDesktop()} onClick={() => void exportImages()}><ArrowDownToLine size={16}/>{done.length && !unsaved.length ? '已打包保存' : `导出 ZIP${done.length ? ` · ${done.length}` : ''}`}</button></>}</div></footer>
+    <footer className="app-footer"><div className="totals">{done.length ? <><strong>{size(before)} <ArrowRight size={14}/> {size(after)}</strong><span>{saving > 0 ? <>共节省 <em>{size(saving)}</em>{before > 0 && ` · ${(saving / before * 100).toFixed(1)}%`}</> : '转换已完成，结果可导出'}</span></> : <><strong>准备好，轻装出发。</strong><span>添加图片后，点击开始处理</span></>}</div><div className="footer-actions">{queue.busy ? <><div className="progress-wrap"><span>{queue.busy === 'export' ? `正在打包 ZIP · ${queue.exportProgress.done} / ${queue.exportProgress.total}` : `并发 ${queue.parallelism} 路 · ${done.length} / ${queue.items.length}`}</span><progress max={Math.max(1, queue.busy === 'export' ? queue.exportProgress.total : queue.items.length)} value={queue.busy === 'export' ? queue.exportProgress.done : queue.items.filter(item => item.status === 'done' || item.status === 'error').length}/></div><button className="button secondary" onClick={queue.stop}><Square size={13}/>停止</button></> : <><button className="button secondary" disabled={!queue.items.length || !waiting || choosing} onClick={() => void queue.run(settings)}>{queue.items.some(item => item.status === 'error') ? '重试未完成' : done.length && waiting ? '继续处理' : '开始处理'}<ArrowRight size={15}/></button><button className="button primary" disabled={!unsaved.length || choosing || !isDesktop()} onClick={() => void exportImages()}><ArrowDownToLine size={16}/>{done.length && !unsaved.length ? '已打包保存' : `导出 ZIP${done.length ? ` · ${done.length}` : ''}`}</button></>}</div></footer>
     {dragging && <div className="drag-overlay"><ImagePlus size={48}/><strong>松开，添加到图片队列</strong></div>}
     {preview && <Preview item={preview} close={() => setPreviewId(undefined)}/>}
   </div>;

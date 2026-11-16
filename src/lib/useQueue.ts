@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createCompressor } from './compress';
+import { resolveParallelism } from './parallelism';
 import { runConcurrent } from './concurrent';
 import { beginZip, addToZip, finishZip, cancelZip } from './desktop';
 import { type ImageItem, type Settings } from './types';
@@ -10,6 +11,7 @@ function release(item: ImageItem) {
 }
 export function useQueue() {
   const [items, setItems] = useState<ImageItem[]>([]);
+  const [parallelism, setParallelism] = useState(2);
   const [busy, setBusy] = useState<'process' | 'export' | null>(null);
   const [notice, setNotice] = useState('');
   const [exportProgress, setExportProgress] = useState({ done: 0, total: 0 });
@@ -59,10 +61,12 @@ export function useQueue() {
     if (lock.current) return;
     lock.current = true; stopped.current = false; setBusy('process'); setNotice('');
     const controller = new AbortController();
-    const session = createCompressor(2);
+    const limit = resolveParallelism(settings.parallelism,navigator.hardwareConcurrency);
+    setParallelism(limit);
+    const session = createCompressor(limit);
     cancelCompression.current = () => { controller.abort(); session.dispose(); };
     try {
-      await runConcurrent(current.current.filter(row => row.status !== 'done'), 2, controller.signal, async item => {
+      await runConcurrent(current.current.filter(row => row.status !== 'done'), limit, controller.signal, async item => {
         patch(item.id, { status: 'processing', error: undefined });
         try {
           const result = await session.compress(item.file, settings, controller.signal);
@@ -121,5 +125,5 @@ export function useQueue() {
       if (mounted.current) setBusy(null);
     }
   }
-  return { items, busy, notice, exportProgress, setNotice, add, remove, invalidate, run, exportAll, stop: () => { stopped.current = true; cancelCompression.current?.(); } };
+  return { items, busy, notice, parallelism, exportProgress, setNotice, add, remove, invalidate, run, exportAll, stop: () => { stopped.current = true; cancelCompression.current?.(); } };
 }

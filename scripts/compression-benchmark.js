@@ -29,15 +29,14 @@
         let next = 0;
         const start = performance.now();
         await Promise.all(Array.from({ length: concurrency }, async () => {
-          while (next < 8) { next++; const result = await compress(file, settings); URL.revokeObjectURL(result.url); }
+          while (next < 24) { next++; const result = await compress(file, settings); URL.revokeObjectURL(result.url); }
         }));
         samples.push(Math.round(performance.now() - start));
       }
-      return { concurrency, images: 8, samplesMs: samples, medianMs: [...samples].sort((a,b)=>a-b)[1], maxMainThreadLagMs: Math.round(maxLag) };
+      return { concurrency, images: 24, samplesMs: samples, medianMs: [...samples].sort((a,b)=>a-b)[1], maxMainThreadLagMs: Math.round(maxLag) };
     } finally { clearInterval(timer); session?.dispose(); }
   };
   const output = [];
-  output.push(await run(1));
-  if (module.createCompressor) output.push(await run(2));
+  for(const concurrency of [2,4,6,8]) output.push(await run(concurrency));
   return output;
 })()

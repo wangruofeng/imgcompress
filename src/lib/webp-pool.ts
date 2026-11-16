@@ -1,3 +1,4 @@
+import { MAX_PARALLELISM } from './parallelism';
 import type { Settings } from './types';
 import type { EncodeReply, CodecRequest } from './webp-protocol';
 
@@ -15,7 +16,7 @@ export class WebpPool {
   private pending: Job[] = [];
   private closed = false;
   constructor(private readonly concurrency: number) {
-    if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 2) throw new Error('并发数必须为 1 或 2');
+    if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > MAX_PARALLELISM) throw new Error(`并发数必须为 1–${MAX_PARALLELISM}`);
   }
   encode = async (image: ImageData, settings: Settings, mime:'image/webp'|'image/avif'='image/webp'): Promise<Blob> => {
     const request:CodecRequest={kind:'encode',mime,pixels:image.data as Uint8ClampedArray<ArrayBuffer>,width:image.width,height:image.height,quality:settings.quality,lossless:settings.lossless};

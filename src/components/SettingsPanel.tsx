@@ -1,5 +1,6 @@
 import { ChevronsUpDown, FolderOpen, ShieldCheck, SlidersHorizontal } from 'lucide-react';
 import { type CSSProperties } from 'react';
+import { parseParallelism, resolveParallelism, parallelismChoices } from '../lib/parallelism';
 import { type Format, type Settings } from '../lib/types';
 interface Props { settings: Settings; change: (next: Settings) => void; disabled: boolean; output: string; choose: () => void }
 export function SettingsPanel({ settings, change, disabled, output, choose }: Props) {
@@ -21,6 +22,13 @@ export function SettingsPanel({ settings, change, disabled, output, choose }: Pr
         <option value="0">保持原始尺寸</option><option value="2560">2560 px</option><option value="1920">1920 px</option><option value="1280">1280 px</option><option value="800">800 px</option>
       </select><ChevronsUpDown size={13} aria-hidden="true"/></div>
       <p className="field-hint">按比例缩小，不放大小图。</p>
+      <div className="divider"/>
+      <label className="field-label" htmlFor="parallelism">并发任务</label>
+      <div className="native-select"><select id="parallelism" value={settings.parallelism} onChange={e=>change({...settings,parallelism:parseParallelism(e.target.value==='auto'?'auto':Number(e.target.value))})}>
+        <option value="auto">自动 · {resolveParallelism('auto',navigator.hardwareConcurrency)} 路</option>
+        {parallelismChoices.map(n=><option value={n} key={n}>{n} 路{n===1?' · 节省内存':''}</option>)}
+      </select><ChevronsUpDown size={13} aria-hidden="true"/></div>
+      <p className="field-hint">批量图片可提高并发；大图建议 2–4 路。</p>
       <label className="switch-row"><span><strong>无损模式</strong><small>保留像素与原始尺寸</small></span><input type="checkbox" role="switch" checked={settings.lossless} onChange={e => change({ ...settings, lossless: e.target.checked })}/></label>
       <p className="field-hint format-scope">格式、质量、尺寸仅作用于静态位图。SVG、GIF、APNG 按原格式优化，保留矢量或动画。</p>
     </fieldset>
