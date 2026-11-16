@@ -6,7 +6,7 @@
 
 [下载 v0.1.3 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/imgcompress-0.1.3-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.1.3) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/SHA256SUMS.txt)
 
-以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.3 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
+以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.4 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
 
 适用于 Apple Silicon Mac（M 系列芯片），最低 macOS 12。当前安装包使用 ad-hoc 签名，尚未通过 Apple Developer ID 签名与公证。
 
@@ -107,6 +107,14 @@ python3 scripts/native-client.py eval scripts/codec-check.js
 ```
 
 测试版自动化 socket 仅在显式传入环境变量时启用。正常 `npm run build` 不包含该插件。
+
+## Logo
+
+窗口与应用图标复用 [ImgCompress 网站 Logo](https://img-compress.wangruofeng007.com/logo.svg)，源文件位于 `public/logo.svg`。应用图标可用 macOS 系统渲染重新生成：
+
+```sh
+swift scripts/render-logo.swift public/logo.svg resources/icon.png
+```
 
 ## 来源与许可证
 

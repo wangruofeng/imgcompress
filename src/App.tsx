@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDownToLine, ArrowRight, Check, ImageDown, ImagePlus, Moon, Plus, ShieldCheck, Square, Sun, Trash2, X } from 'lucide-react';
+import { ArrowDownToLine, ArrowRight, Check, ImagePlus, Moon, Plus, ShieldCheck, Square, Sun, Trash2, X } from 'lucide-react';
 import { ImageRow } from './components/ImageRow';
 import { Preview } from './components/Preview';
 import { SettingsPanel } from './components/SettingsPanel';
@@ -66,7 +66,7 @@ export default function App() {
     try { await reveal(path); } catch (error) { queue.setNotice(error instanceof Error ? error.message : '无法打开 Finder'); }
   }
   return <div className="app-shell" onDragEnter={e => { e.preventDefault(); if (e.dataTransfer.types.includes('Files')) { dragDepth.current++; if (!busy) setDragging(true); } }} onDragOver={e => e.preventDefault()} onDragLeave={e => { e.preventDefault(); dragDepth.current--; if (dragDepth.current <= 0) setDragging(false); }} onDrop={e => { e.preventDefault(); dragDepth.current = 0; setDragging(false); if (!busy) queue.add(Array.from(e.dataTransfer.files)); }}>
-    <header className="app-header"><div className="app-mark"><ImageDown size={22}/></div><div className="brand"><h1>ImgCompress</h1><span>图片轻一点，工作快一点。</span></div><div className="header-actions"><span className="local-label"><ShieldCheck size={14}/>本地处理</span><button className="icon-button theme-toggle" onClick={() => setDark(!dark)} aria-label={dark ? '切换浅色模式' : '切换深色模式'}>{dark ? <Sun size={18}/> : <Moon size={18}/>}</button></div></header>
+    <header className="app-header"><div className="app-mark"><img src="./logo.svg" alt="ImgCompress"/></div><div className="brand"><h1>ImgCompress</h1><span>图片轻一点，工作快一点。</span></div><div className="header-actions"><span className="local-label"><ShieldCheck size={14}/>本地处理</span><button className="icon-button theme-toggle" onClick={() => setDark(!dark)} aria-label={dark ? '切换浅色模式' : '切换深色模式'}>{dark ? <Sun size={18}/> : <Moon size={18}/>}</button></div></header>
     <input ref={input} type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/svg+xml,image/gif,image/apng,.jpg,.jpeg,.png,.webp,.avif,.svg,.gif,.apng" multiple hidden onChange={e => { queue.add(Array.from(e.target.files ?? [])); e.target.value = ''; }}/>
     <main className="workspace"><section className="queue-panel" aria-label="图片队列">
       <div className="queue-toolbar"><div><h2>图片队列 <span className="count">{queue.items.length}</span></h2><p>压缩与转换，一次完成。</p></div><div className="toolbar-actions">{queue.items.length > 0 && <button className="icon-button" disabled={busy} onClick={() => { queue.remove(); setPreviewId(undefined); }} aria-label="清空图片队列"><Trash2 size={16}/></button>}<button className="button secondary" disabled={busy} onClick={() => input.current?.click()}><Plus size={15}/>添加图片</button></div></div>
