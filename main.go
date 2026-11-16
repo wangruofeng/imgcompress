@@ -119,6 +119,31 @@ func main() {
 		}
 	})
 	mygo.App.WhenReady(func() {
+		mygo.App.SetMenu(mygo.NewMenu([]*mygo.MenuItem{
+			{Role: mygo.RoleAppMenu, Submenu: []*mygo.MenuItem{
+				{Label: "关于 ImgCompress", Click: func(_ *mygo.MenuItem, _ *mygo.Window) {
+					mygo.App.ShowAboutPanel(mygo.AboutPanelOptions{
+						ApplicationName:    "ImgCompress",
+						ApplicationVersion: mygo.App.Version(),
+						Copyright:          "© 2026 Ruofeng Wang",
+						Credits:            "图片轻一点，工作快一点。\n\n作者：Ruofeng Wang（wangruofeng）\nGitHub：https://github.com/wangruofeng/imgcompress-mac",
+					})
+				}},
+				{Label: "在 GitHub 上查看项目…", Click: func(_ *mygo.MenuItem, _ *mygo.Window) {
+					if err := mygo.Shell.OpenExternal("https://github.com/wangruofeng/imgcompress-mac"); err != nil {
+						log.Println("无法打开 GitHub：", err)
+					}
+				}},
+				mygo.Separator(),
+				{Role: mygo.RoleServices},
+				mygo.Separator(),
+				{Role: mygo.RoleHide}, {Role: mygo.RoleHideOthers}, {Role: mygo.RoleUnhide},
+				mygo.Separator(),
+				{Role: mygo.RoleQuit},
+			}},
+			{Role: mygo.RoleFileMenu}, {Role: mygo.RoleEditMenu},
+			{Role: mygo.RoleViewMenu}, {Role: mygo.RoleWindowMenu},
+		}))
 		desktop.win = mygo.NewWindow(mygo.WindowOptions{
 			Title: "ImgCompress", URL: frontendURL, Width: 1120, Height: 760,
 			MinWidth: 860, MinHeight: 600,

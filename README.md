@@ -75,6 +75,10 @@ npm run build
 
 构建产物位于 `build/`。[开发、原生验证与许可证说明](docs/reference.md) · [CHANGELOG](CHANGELOG.md)
 
+## 作者
+
+由 [Ruofeng Wang（wangruofeng）](https://github.com/wangruofeng) 开发与维护。[GitHub 项目](https://github.com/wangruofeng/imgcompress-mac) · [反馈问题](https://github.com/wangruofeng/imgcompress-mac/issues)
+
 ## 开源与来源
 
 [MIT License](LICENSE)。编码方案改编自 [ImgCompress 网站](https://img-compress.wangruofeng007.com/)，窗口与应用沿用同款 Logo。第三方许可证见 [开发参考](docs/reference.md#来源与许可证)。
