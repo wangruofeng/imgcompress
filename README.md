@@ -4,9 +4,9 @@
 
 ## 下载
 
-[下载 v0.1.3 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/imgcompress-0.1.3-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.1.3) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/SHA256SUMS.txt)
+[下载 v0.2.4 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.4/imgcompress-0.2.4-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.2.4) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.4/SHA256SUMS.txt)
 
-以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.4 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
+v0.2.4 支持 JPG、PNG、WebP、AVIF、SVG、GIF 和 APNG，并提供最高 16 路并发处理、转换耗时展示和 ZIP 导出后自动定位。
 
 适用于 Apple Silicon Mac（M 系列芯片），最低 macOS 12。当前安装包使用 ad-hoc 签名，尚未通过 Apple Developer ID 签名与公证。
 
