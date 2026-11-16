@@ -5,7 +5,7 @@ export interface Result { blob: Blob; url: string; width: number; height: number
 export interface ImageItem {
   id: string; file: File; url: string;
   status: 'pending' | 'processing' | 'done' | 'error';
-  result?: Result; error?: string; savedPath?: string;
+  result?: Result; error?: string; savedPath?: string; startedAt?:number; elapsedMs?:number;
 }
 export const defaults: Settings = { quality: 0.8, format: 'auto', maxWidth: 0, lossless: false, parallelism:'auto' };
 export const formatName = (mime: string) => ({ 'image/jpeg': 'JPG', 'image/png': 'PNG', 'image/webp': 'WebP', 'image/avif':'AVIF', 'image/svg+xml':'SVG', 'image/gif':'GIF', 'image/apng':'APNG' })[mime] ?? mime;

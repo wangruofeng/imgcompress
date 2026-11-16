@@ -6,7 +6,7 @@
 
 [下载 v0.1.3 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/imgcompress-0.1.3-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.1.3) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/SHA256SUMS.txt)
 
-以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.2 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
+以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.3 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
 
 适用于 Apple Silicon Mac（M 系列芯片），最低 macOS 12。当前安装包使用 ad-hoc 签名，尚未通过 Apple Developer ID 签名与公证。
 
@@ -53,8 +53,9 @@
 - 无损模式输出 WebP，保留解码后的像素和原尺寸；不保留或承诺原始 EXIF、ICC、GPS 等元数据，也不保证体积更小。
 - PNG 为无损编码，质量滑块对此格式不生效。
 - 最大宽度为 800 / 1280 / 1920 / 2560 px，保持比例，不放大小图。
+- 每张图片显示处理耗时；底部显示整批累计处理时间，实时刷新，不含暂停和 ZIP 导出时间。
 - 最多 200 张，单张最大 100 MB，解码后最多 4000 万像素。队列与预览会占用内存，处理完可以清空队列。
-- 并发可选自动、1、2、4、6、8 路。自动模式按 CPU 核心数选择，最多 4 路；批量中小图可手动选 6–8 路，大图建议 2–4 路。AVIF/WebP 使用独立 Worker，每批次结束释放编码线程。更改并发不会清空已完成结果。
+- 并发可选自动、1、2、4、6、8、12、16 路。自动模式按 CPU 核心数选择，最多 4 路；批量中小图可手动提高并发，最高 16 路，大图建议 2–4 路。AVIF/WebP 使用独立 Worker，每批次结束释放编码线程。更改并发不会清空已完成结果。
 - 「停止」会立即终止 WebP 编码线程，停止领取后续任务；未完成图片恢复待处理，已完成结果保留。JPG/PNG 的系统 Canvas 编码会等待当前调用返回。打包停止时删除未完成的临时 ZIP，已处理图片保留，可以重新导出。
 - 暂不支持 HEIC、动画 WebP 和 AVIF 动画序列。
 - 本地自用构建采用 ad-hoc 签名，尚未进行 Apple Developer ID 签名或公证。分发给其他电脑前应配置正式签名。

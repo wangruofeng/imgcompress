@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createProcessingTimer } from './timing';
 import { createCompressor } from './compress';
 import { resolveParallelism } from './parallelism';
 import { runConcurrent } from './concurrent';
@@ -10,6 +11,9 @@ function release(item: ImageItem) {
   if (item.result) URL.revokeObjectURL(item.result.url);
 }
 export function useQueue() {
+  const [timer] = useState(()=>createProcessingTimer());
+  const [elapsedMs,setElapsedMs] = useState(0);
+  const [now,setNow] = useState(0);
   const [items, setItems] = useState<ImageItem[]>([]);
   const [parallelism, setParallelism] = useState(2);
   const [busy, setBusy] = useState<'process' | 'export' | null>(null);
@@ -29,8 +33,15 @@ export function useQueue() {
   const patch = (id: string, changes: Partial<ImageItem>) => update(rows => rows.map(row => row.id === id ? { ...row, ...changes } : row));
   useEffect(() => {
     mounted.current = true;
-    return () => { mounted.current = false; stopped.current = true; cancelCompression.current?.(); current.current.forEach(release); };
+    return () => { timer.stop(); mounted.current = false; stopped.current = true; cancelCompression.current?.(); current.current.forEach(release); };
   }, []);
+
+  useEffect(()=>{
+    if(busy!=='process')return;
+    const tick=()=>{setNow(performance.now());setElapsedMs(timer.elapsed())};
+    tick();const id=setInterval(tick,100);return()=>clearInterval(id);
+  },[busy,timer]);
+  function resetTiming(){timer.reset();setElapsedMs(0);setNow(0)}
 
   function add(files: File[]) {
     if (lock.current) return;
@@ -48,17 +59,22 @@ export function useQueue() {
   function remove(id?: string) {
     if (lock.current) return;
     update(rows => rows.filter(row => { if (!id || row.id === id) { release(row); return false; } return true; }));
+    if(current.current.length===0)resetTiming();
     setNotice('');
   }
   function invalidate() {
     if (lock.current) return;
+    resetTiming();
     update(rows => rows.map(row => {
       if (row.result) URL.revokeObjectURL(row.result.url);
-      return { ...row, status: 'pending', result: undefined, error: undefined, savedPath: undefined };
+      return { ...row, status: 'pending', result: undefined, error: undefined, savedPath: undefined, startedAt:undefined, elapsedMs:undefined };
     }));
   }
   async function run(settings: Settings) {
     if (lock.current) return;
+    const todo=current.current.filter(row=>row.status!=='done');
+    if(!todo.length)return;
+    timer.start();
     lock.current = true; stopped.current = false; setBusy('process'); setNotice('');
     const controller = new AbortController();
     const limit = resolveParallelism(settings.parallelism,navigator.hardwareConcurrency);
@@ -66,25 +82,28 @@ export function useQueue() {
     const session = createCompressor(limit);
     cancelCompression.current = () => { controller.abort(); session.dispose(); };
     try {
-      await runConcurrent(current.current.filter(row => row.status !== 'done'), limit, controller.signal, async item => {
-        patch(item.id, { status: 'processing', error: undefined });
+      await runConcurrent(todo, limit, controller.signal, async item => {
+        const startedAt=performance.now();
+        patch(item.id, { status: 'processing', error: undefined, startedAt, elapsedMs:undefined });
         try {
           const result = await session.compress(item.file, settings, controller.signal);
           if (controller.signal.aborted) {
             URL.revokeObjectURL(result.url);
             if(result.originalPreviewUrl)URL.revokeObjectURL(result.originalPreviewUrl);
-            patch(item.id, { status: 'pending' });
+            patch(item.id, { status: 'pending', startedAt:undefined, elapsedMs:undefined });
           } else {
             if(result.originalPreviewUrl)URL.revokeObjectURL(item.url);
-            patch(item.id, { status: 'done', result, ...(result.originalPreviewUrl?{url:result.originalPreviewUrl}:{}) });
+            patch(item.id, { status: 'done', result, startedAt:undefined, elapsedMs:performance.now()-startedAt, ...(result.originalPreviewUrl?{url:result.originalPreviewUrl}:{}) });
           }
         } catch (error) {
-          if (controller.signal.aborted) patch(item.id, { status: 'pending', error: undefined });
-          else patch(item.id, { status: 'error', error: error instanceof Error ? error.message : '处理失败' });
+          if (controller.signal.aborted) patch(item.id, { status: 'pending', error: undefined, startedAt:undefined, elapsedMs:undefined });
+          else patch(item.id, { status: 'error', startedAt:undefined, elapsedMs:performance.now()-startedAt, error: error instanceof Error ? error.message : '处理失败' });
         }
       });
       if (controller.signal.aborted) setNotice('已停止。已完成的图片可以导出，其余图片可继续处理。');
     } finally {
+      timer.stop();
+      if(mounted.current){setElapsedMs(timer.elapsed());setNow(performance.now())}
       session.dispose(); cancelCompression.current = undefined; lock.current = false;
       if (mounted.current) setBusy(null);
     }
@@ -128,5 +147,5 @@ export function useQueue() {
       if (mounted.current) setBusy(null);
     }
   }
-  return { items, busy, notice, parallelism, exportProgress, setNotice, add, remove, invalidate, run, exportAll, stop: () => { stopped.current = true; cancelCompression.current?.(); } };
+  return { items, busy, notice, elapsedMs, now, parallelism, exportProgress, setNotice, add, remove, invalidate, run, exportAll, stop: () => { stopped.current = true; cancelCompression.current?.(); } };
 }
