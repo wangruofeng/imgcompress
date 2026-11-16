@@ -1,0 +1,23 @@
+{
+  "name": "ImgCompress",
+  "slug": "imgcompress",
+  "identifier": "com.wangruofeng007.imgcompress",
+  "version": "0.1.3",
+  "devUrl": "http://127.0.0.1:5173",
+  "devCommand": "npm run dev:web",
+  "buildCommand": "npm run build:web",
+  "frontendDist": "dist",
+  "bindings": "src/generated/mygo.ts",
+  "out": "build",
+  "macos": {
+    "signingIdentity": "-",
+    "minimumSystemVersion": "12.0",
+    "infoPlist": {
+      "CFBundleDevelopmentRegion": "zh_CN",
+      "CFBundleLocalizations": [
+        "zh_CN",
+        "en"
+      ]
+    }
+  }
+}

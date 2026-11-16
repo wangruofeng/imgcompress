@@ -1,0 +1,32 @@
+{
+  "name": "imgcompress-mac",
+  "version": "0.1.3",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "mygo dev",
+    "dev:web": "vite --host 127.0.0.1",
+    "build:web": "tsc --noEmit && vite build",
+    "build": "mygo build -sign -",
+    "check": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test scripts/concurrent.test.mjs"
+  },
+  "dependencies": {
+    "@jsquash/webp": "1.5.0",
+    "lucide-react": "0.562.0",
+    "mygo-runtime": "0.9.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "wasm-feature-detect": "1.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "mygo-cli": "0.9.1",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
