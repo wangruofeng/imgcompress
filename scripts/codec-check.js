@@ -41,8 +41,8 @@
   const automatic = await compress(file, defaults);
   check('自动模式不会增大原尺寸图片', automatic.blob.size <= file.size); URL.revokeObjectURL(automatic.url);
   for (const [name, bytes] of [
-    ['GIF', new TextEncoder().encode('GIF89a')],
-    ['APNG', new Uint8Array([137,80,78,71,13,10,26,10,0,0,0,0,97,99,84,76,0,0,0,0])],
+    ['截断的 GIF', new TextEncoder().encode('GIF89a')],
+    ['截断的 APNG', new Uint8Array([137,80,78,71,13,10,26,10,0,0,0,0,97,99,84,76,0,0,0,0])],
     ['WebP 动图', new Uint8Array([82,73,70,70,0,0,0,0,87,69,66,80,65,78,73,77,0,0,0,0])],
   ]) {
     let rejected = false; try { inspect(bytes); } catch { rejected = true; }

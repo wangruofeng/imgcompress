@@ -8,9 +8,9 @@ export function SettingsPanel({ settings, change, disabled, output, choose }: Pr
     <fieldset disabled={disabled}>
       <label className="field-label" htmlFor="format">输出格式</label>
       <div className="native-select"><select id="format" value={settings.format} disabled={settings.lossless} onChange={e => change({ ...settings, format: e.target.value as Format })}>
-        <option value="auto">智能选择 · 更小的体积</option><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option>
+        <option value="auto">智能选择 · 更小的体积</option><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/avif">AVIF</option>
       </select><ChevronsUpDown size={13} aria-hidden="true"/></div>
-      <p className="field-hint">{settings.lossless ? '无损模式输出 WebP，保留解码像素。' : settings.format === 'image/jpeg' ? '透明区域将填充白色背景。' : settings.format === 'image/png' ? 'PNG 为无损编码，体积可能更大。' : '智能模式会在结果变大时保留原文件。'}</p>
+      <p className="field-hint">{settings.lossless ? '无损模式输出 WebP，保留解码像素。' : settings.format === 'image/jpeg' ? '透明区域将填充白色背景。' : settings.format === 'image/png' ? 'PNG 为无损编码，体积可能更大。' : settings.format === 'image/avif' ? 'AVIF 支持透明度，编码可能需要更长时间。' : settings.format === 'image/webp' ? 'WebP 保留透明度，兼顾画质与体积。' : '智能模式会在结果变大时保留原文件。'}</p>
       <div className="field-label quality-label"><label htmlFor="quality">图片质量</label><span>{Math.round(settings.quality * 100)}<small>%</small></span></div>
       <input style={{ '--range-progress': `${(settings.quality * 100 - 10) / 90 * 100}%` } as CSSProperties} id="quality" type="range" min="10" max="100" step="1" disabled={settings.lossless || settings.format === 'image/png'} value={Math.round(settings.quality * 100)} onChange={e => change({ ...settings, quality: Number(e.target.value) / 100 })}/>
       <div className="range-labels"><span>体积更小</span><span>画质更好</span></div>
@@ -22,6 +22,7 @@ export function SettingsPanel({ settings, change, disabled, output, choose }: Pr
       </select><ChevronsUpDown size={13} aria-hidden="true"/></div>
       <p className="field-hint">按比例缩小，不放大小图。</p>
       <label className="switch-row"><span><strong>无损模式</strong><small>保留像素与原始尺寸</small></span><input type="checkbox" role="switch" checked={settings.lossless} onChange={e => change({ ...settings, lossless: e.target.checked })}/></label>
+      <p className="field-hint format-scope">格式、质量、尺寸仅作用于静态位图。SVG、GIF、APNG 按原格式优化，保留矢量或动画。</p>
     </fieldset>
     <div className="divider"/>
     <div className="field-label">输出位置</div>

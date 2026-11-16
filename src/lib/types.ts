@@ -1,13 +1,13 @@
-export type Format = 'auto' | 'image/jpeg' | 'image/png' | 'image/webp';
+export type Format = 'auto' | 'image/jpeg' | 'image/png' | 'image/webp' | 'image/avif';
 export interface Settings { quality: number; format: Format; maxWidth: number; lossless: boolean }
-export interface Result { blob: Blob; url: string; width: number; height: number; keptOriginal: boolean }
+export interface Result { blob: Blob; url: string; width: number; height: number; keptOriginal: boolean; preserved?: 'animation' | 'vector'; originalPreviewUrl?:string }
 export interface ImageItem {
   id: string; file: File; url: string;
   status: 'pending' | 'processing' | 'done' | 'error';
   result?: Result; error?: string; savedPath?: string;
 }
 export const defaults: Settings = { quality: 0.8, format: 'auto', maxWidth: 0, lossless: false };
-export const formatName = (mime: string) => ({ 'image/jpeg': 'JPG', 'image/png': 'PNG', 'image/webp': 'WebP' })[mime] ?? mime;
+export const formatName = (mime: string) => ({ 'image/jpeg': 'JPG', 'image/png': 'PNG', 'image/webp': 'WebP', 'image/avif':'AVIF', 'image/svg+xml':'SVG', 'image/gif':'GIF', 'image/apng':'APNG' })[mime] ?? mime;
 export function size(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;

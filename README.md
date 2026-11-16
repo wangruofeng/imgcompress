@@ -6,6 +6,8 @@
 
 [下载 v0.1.3 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/imgcompress-0.1.3-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.1.3) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/SHA256SUMS.txt)
 
+以上已发布的 0.1.3 支持 JPG/PNG/WebP；本仓库 0.2.0 源码新增 AVIF/SVG/GIF/APNG，可自行构建。
+
 适用于 Apple Silicon Mac（M 系列芯片），最低 macOS 12。当前安装包使用 ad-hoc 签名，尚未通过 Apple Developer ID 签名与公证。
 
 ## 界面预览
@@ -43,7 +45,9 @@
 
 ## 功能与边界
 
-- 静态 JPG、PNG、WebP 相互转换，自动模式选择 WebP/JPG，并在未缩放且结果变大时保留原图。
+- 静态 JPG、PNG、WebP、AVIF 相互转换；AVIF 使用本地 WASM 编解码器。自动模式仍优先 WebP/JPG，未缩放且结果变大时保留原图。
+- SVG 保守优化源码，保留矢量、viewBox 与 ID 引用；仅支持不含脚本、外链资源、嵌入页面或 SMIL 动画的独立 SVG。
+- GIF/APNG 原格式优化，仅移除注释/文字/时间等附加元数据；保留图像帧、透明度、时序与循环，不改分辨率。格式、质量和最大宽度设置不作用于这三种原格式优化。没有可删除的附加内容时可能保持原体积。
 - JPG 透明区域填白；PNG、WebP 保留透明度。
 - WebP 使用随应用打包的 WASM 编码器，离线可用。
 - 无损模式输出 WebP，保留解码后的像素和原尺寸；不保留或承诺原始 EXIF、ICC、GPS 等元数据，也不保证体积更小。
@@ -52,7 +56,7 @@
 - 最多 200 张，单张最大 100 MB，解码后最多 4000 万像素。队列与预览会占用内存，处理完可以清空队列。
 - 同时压缩 2 张图片；WebP 使用独立 Worker 编码，减少界面卡顿。每批次结束释放编码线程。
 - 「停止」会立即终止 WebP 编码线程，停止领取后续任务；未完成图片恢复待处理，已完成结果保留。JPG/PNG 的系统 Canvas 编码会等待当前调用返回。打包停止时删除未完成的临时 ZIP，已处理图片保留，可以重新导出。
-- 暂不支持 SVG、GIF、APNG、动画 WebP、HEIC、AVIF。
+- 暂不支持 HEIC、动画 WebP 和 AVIF 动画序列。
 - 本地自用构建采用 ad-hoc 签名，尚未进行 Apple Developer ID 签名或公证。分发给其他电脑前应配置正式签名。
 
 ## 开发
@@ -105,4 +109,4 @@ python3 scripts/native-client.py eval scripts/codec-check.js
 
 ## 来源与许可证
 
-基于本地 [ImgCompress](https://img-compress.wangruofeng007.com/) 的 MIT 授权编码方案改编；原始许可见 `LICENSE`。MyGo 使用 MIT 许可，@jsquash/webp 使用 Apache-2.0 许可。第三方许可证副本随应用位于 Resources/licenses。
+基于本地 [ImgCompress](https://img-compress.wangruofeng007.com/) 的 MIT 授权编码方案改编；原始许可见 `LICENSE`。MyGo 与 SVGO 使用 MIT 许可，@jsquash/webp、@jsquash/avif 使用 Apache-2.0 许可。第三方许可证副本随应用位于 Resources/licenses。

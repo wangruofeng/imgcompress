@@ -35,13 +35,13 @@ export function useQueue() {
     let rejected = 0;
     const accepted: ImageItem[] = [];
     for (const file of files) {
-      if (!/\.(jpe?g|png|webp)$/i.test(file.name) || file.size === 0 || file.size > 100 * 1024 * 1024) { rejected++; continue; }
+      if (!/\.(jpe?g|png|webp|avif|svg|gif|apng)$/i.test(file.name) || file.size === 0 || file.size > 100 * 1024 * 1024) { rejected++; continue; }
       if ([...current.current, ...accepted].some(row => row.file.name === file.name && row.file.size === file.size && row.file.lastModified === file.lastModified)) continue;
       if (current.current.length + accepted.length >= 200) { rejected++; continue; }
       accepted.push({ id: crypto.randomUUID(), file, url: URL.createObjectURL(file), status: 'pending' });
     }
     update(rows => [...rows, ...accepted]);
-    setNotice(rejected ? `已跳过 ${rejected} 个文件：仅支持 100 MB 以内的 JPG、PNG、WebP，最多添加 200 张。` : '');
+    setNotice(rejected ? `已跳过 ${rejected} 个文件：仅支持 100 MB 以内的 JPG、PNG、WebP、AVIF、SVG、GIF、APNG，最多添加 200 张。` : '');
   }
   function remove(id?: string) {
     if (lock.current) return;
@@ -68,8 +68,12 @@ export function useQueue() {
           const result = await session.compress(item.file, settings, controller.signal);
           if (controller.signal.aborted) {
             URL.revokeObjectURL(result.url);
+            if(result.originalPreviewUrl)URL.revokeObjectURL(result.originalPreviewUrl);
             patch(item.id, { status: 'pending' });
-          } else patch(item.id, { status: 'done', result });
+          } else {
+            if(result.originalPreviewUrl)URL.revokeObjectURL(item.url);
+            patch(item.id, { status: 'done', result, ...(result.originalPreviewUrl?{url:result.originalPreviewUrl}:{}) });
+          }
         } catch (error) {
           if (controller.signal.aborted) patch(item.id, { status: 'pending', error: undefined });
           else patch(item.id, { status: 'error', error: error instanceof Error ? error.message : '处理失败' });
