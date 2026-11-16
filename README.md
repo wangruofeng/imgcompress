@@ -4,7 +4,7 @@
 
 一款轻量的 macOS 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
 
-**[下载 v0.2.4 · Apple Silicon DMG](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.4/imgcompress-0.2.4-arm64.dmg)**　·　[更新记录](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.2.4)　·　[SHA-256 校验](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.4/SHA256SUMS.txt)
+**[下载 v0.2.5 · Apple Silicon DMG](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.5/imgcompress-0.2.5-arm64.dmg)**　·　[更新记录](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.2.5)　·　[SHA-256 校验](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.5/SHA256SUMS.txt)
 
 适用于 M 系列芯片 Mac，最低 macOS 12。安装包采用 ad-hoc 签名，尚未经过 Apple Developer ID 签名与公证。
 
