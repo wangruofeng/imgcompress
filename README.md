@@ -2,6 +2,12 @@
 
 基于 [MyGo](https://mygo.run/zh) 的轻量 macOS 图片压缩与格式转换工具。界面使用 React，图片在 WKWebView 内本地处理，Go 提供原生输出文件夹选择和文件保存。
 
+## 下载
+
+[下载 v0.1.3 · macOS Apple Silicon（DMG）](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/imgcompress-0.1.3-arm64.dmg) · [版本说明](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.1.3) · [SHA-256 校验和](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.1.3/SHA256SUMS.txt)
+
+适用于 Apple Silicon Mac（M 系列芯片），最低 macOS 12。当前安装包使用 ad-hoc 签名，尚未通过 Apple Developer ID 签名与公证。
+
 ## 界面预览
 
 ### 主界面 · 浅色模式
@@ -26,7 +32,7 @@
 
 ## 安装与使用
 
-本次构建：`build/darwin-arm64/imgcompress-0.1.3-arm64.dmg`，适用于 Apple Silicon（M1/M2/M3/M4 等）及 macOS 12+。打开 DMG 后，将 ImgCompress 拖入 Applications；也可直接运行 `build/darwin-arm64/ImgCompress.app`。
+从上方下载 DMG，打开后将 ImgCompress 拖入 Applications。自行构建时，安装包和应用位于 `build/darwin-arm64/`。
 
 1. 拖入图片或点击「添加图片」，支持多选和 ⌘O。
 2. 选择格式、质量和最大宽度，点击「开始处理」。
