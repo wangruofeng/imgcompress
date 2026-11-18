@@ -16,7 +16,7 @@
 
 Mac 安装包使用 ad-hoc 签名，尚未经过 Apple 公证。Windows 版需要 Microsoft Edge WebView2 Runtime。
 
-![v0.2.4 批量压缩：单张耗时、累计耗时与 ZIP 导出](docs/screenshots/batch-dark-v0.2.4.png)
+![ImgCompress 批量压缩结果：4 张图片转为 WebP，总体积从 8.73 MB 降至 643.0 KB](docs/screenshots/batch-light-v0.3.0.png)
 
 ## 为什么用它
 
@@ -63,7 +63,7 @@ SVG、GIF、APNG 不应用格式、质量与尺寸设置，优化后体积可能
 
 </details>
 
-截图来自 v0.2.4 的实际 Mac 原生窗口；使用示例图片，压缩比例与耗时仅代表该样本。
+折叠区展示 v0.2.4 的 Mac 界面。截图中的压缩比例与耗时仅代表对应样本。
 
 ## 本地开发
 
