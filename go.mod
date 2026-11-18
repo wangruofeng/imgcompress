@@ -1,4 +1,4 @@
-module imgcompress-mac
+module imgcompress
 
 go 1.27.3
 

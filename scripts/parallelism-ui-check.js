@@ -10,19 +10,19 @@
  x.putImageData(pixels,0,0);const blob=await new Promise(r=>c.toBlob(r,'image/png'));
  const dt=new DataTransfer();for(let i=0;i<12;i++)dt.items.add(new File([blob],`parallel-${i}.png`,{type:'image/png'}));
  const input=document.querySelector('input[type=file]');input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>document.querySelectorAll('.image-row').length===12);
- document.querySelector('.footer-actions .secondary').click();await wait(()=>document.querySelectorAll('.image-row.processing').length===8);
+ document.querySelector('#process-images').click();await wait(()=>document.querySelectorAll('.image-row.processing').length===8);
  check('队列实际同时处理 8 张图片',true);
  const stop=[...document.querySelectorAll('button')].find(b=>b.textContent.includes('停止'));stop.click();await wait(()=>!document.querySelector('.progress-wrap'));
  check('8 路停止后无悬挂任务',document.querySelectorAll('.image-row.processing').length===0);
  const before=document.querySelectorAll('.image-row.done').length;change('#parallelism','4');await pause();
  check('改变并发保留已完成结果',document.querySelectorAll('.image-row.done').length===before);
- document.querySelector('.footer-actions .secondary').click();await wait(()=>document.querySelector('.progress-wrap'));
+ document.querySelector('#process-images').click();await wait(()=>document.querySelector('.progress-wrap'));
  let peak=document.querySelectorAll('.image-row.processing').length;const timer=setInterval(()=>peak=Math.max(peak,document.querySelectorAll('.image-row.processing').length),5);
  await wait(()=>!document.querySelector('.progress-wrap'));clearInterval(timer);
  check('4 路继续处理不超过上限',peak>0&&peak<=4);
  check('12 张图片全部成功',document.querySelectorAll('.image-row.done').length===12&&document.querySelectorAll('.image-row.error').length===0);
  change('#parallelism','6');await pause();
- check('压缩完成后调并发不清空结果',document.querySelectorAll('.image-row.done').length===12&&!document.querySelector('.footer-actions .primary').disabled);
+ check('压缩完成后调并发不清空结果',document.querySelectorAll('.image-row.done').length===12&&!document.querySelector('#export-images').disabled);
  check('并发偏好已持久化',JSON.parse(localStorage.getItem('settings')).parallelism===6);
  return checks;
 })()

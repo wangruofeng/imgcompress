@@ -9,8 +9,8 @@
  }
  const input=document.querySelector('input[type=file]');input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}));
  await wait(()=>document.querySelectorAll('.image-row').length===3);
- document.querySelector('.footer-actions .secondary').click();
+ document.querySelector('#process-images').click();
  await wait(()=>document.querySelectorAll('.image-row.done').length===3);
  if(document.querySelectorAll('.image-row.error').length)throw Error('compression failed');
- return {ready:3,button:document.querySelector('.footer-actions .primary').textContent};
+ return {ready:3,button:document.querySelector('#export-images').textContent};
 })()

@@ -1,12 +1,20 @@
-# ImgCompress Mac
+# ImgCompress
 
 **图片轻一点，工作快一点。**
 
-一款轻量的 macOS 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
+一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
 
-**[下载 v0.2.5 · Apple Silicon DMG](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.5/imgcompress-0.2.5-arm64.dmg)**　·　[更新记录](https://github.com/wangruofeng/imgcompress-mac/releases/tag/v0.2.5)　·　[SHA-256 校验](https://github.com/wangruofeng/imgcompress-mac/releases/download/v0.2.5/SHA256SUMS.txt)
+## 下载 v0.3.0
 
-适用于 M 系列芯片 Mac，最低 macOS 12。安装包采用 ad-hoc 签名，尚未经过 Apple Developer ID 签名与公证。
+| 平台 | 安装包 |
+| --- | --- |
+| macOS 12+ · Apple Silicon（M 系列） | [下载 ARM64 DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/imgcompress-0.3.0-arm64.dmg) |
+| macOS 12+ · Intel | [下载 Intel DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/imgcompress-0.3.0-amd64.dmg) |
+| Windows x64 · Intel / AMD | [下载 Windows 安装程序](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/imgcompress-setup-0.3.0-amd64.exe) |
+
+[更新记录](https://github.com/wangruofeng/imgcompress/releases/tag/v0.3.0) · [SHA-256 校验](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/SHA256SUMS.txt)
+
+Mac 安装包使用 ad-hoc 签名，尚未经过 Apple 公证。Windows 版需要 Microsoft Edge WebView2 Runtime。
 
 ![v0.2.4 批量压缩：单张耗时、累计耗时与 ZIP 导出](docs/screenshots/batch-dark-v0.2.4.png)
 
@@ -15,17 +23,17 @@
 - **本地处理，离线可用**：图片无需上传，保留原文件。
 - **七种常用格式**：JPG、PNG、WebP、AVIF，以及 SVG、GIF、APNG 原格式优化。
 - **批量并发，最高 32 路**：支持自动调度与手动选择，展示单张和整批处理耗时。
-- **一次导出一个 ZIP**：重名自动编号，保存后在 Finder 中定位。
-- **压缩效果看得见**：逐张查看体积变化，点击缩略图对比原图与结果。
+- **单张下载或批量导出 ZIP**：重名自动编号，保存后在所在文件夹中定位。
+- **压缩效果看得见**：逐张查看体积变化，点击图片行，拖动滑杆对比原图与结果。
 - **按需调整**：质量、最大宽度、WebP 无损模式，配合深浅色界面。
 
 ## 三步完成
 
-1. **拖入图片**，也可点击「添加图片」或按 `⌘O` 多选。
+1. **拖入图片**，也可点击「添加图片」多选，或按 ⌘V（Windows 为 Ctrl+V）粘贴。
 2. **设置并处理**：选择格式、质量与尺寸，点击「开始处理」。大图建议使用 2–4 路并发。
-3. **导出 ZIP**：选择保存文件夹，所有已完成图片打包保存，并自动在 Finder 中选中。
+3. **导出 ZIP**：选择保存文件夹，所有已完成图片打包保存，并自动在所在文件夹中选中。
 
-首次安装：打开 DMG，将 ImgCompress 拖入 Applications。
+Mac 用户打开 DMG，将 ImgCompress 拖入 Applications。Windows 用户运行安装程序。
 
 ## 格式支持
 
@@ -59,7 +67,7 @@ SVG、GIF、APNG 不应用格式、质量与尺寸设置，优化后体积可能
 
 ## 本地开发
 
-基于 [MyGo](https://mygo.run/zh)、Go、React 与 TypeScript，使用 WKWebView 和本地 WASM 编解码器。需要 Node.js 22+、Go 1.27.3+。
+基于 [MyGo](https://mygo.run/zh)、Go、React 与 TypeScript，分别使用 macOS WKWebView、Windows WebView2 和本地 WASM 编解码器。需要 Node.js 22+、Go 1.27.3+。
 
 ```sh
 npm ci
@@ -73,11 +81,13 @@ npm run check && npm test && go test ./...
 npm run build
 ```
 
+在 macOS 上运行 `npm run build:mac` 会分别生成 Apple Silicon（`build/darwin-arm64/`）和 Intel（`build/darwin-amd64/`）两个 DMG。只构建一种架构时使用 `npm run build:mac:arm64` 或 `npm run build:mac:intel`。需要单个安装包兼容两种芯片时使用 `npm run build:mac:universal`。在 Windows x64 上运行 `npm run build:windows` 可生成 NSIS 安装程序；使用 `npm run build:windows:portable` 可跨平台生成免安装目录。Windows 运行时需要 Microsoft Edge WebView2 Runtime。
+
 构建产物位于 `build/`。[开发、原生验证与许可证说明](docs/reference.md) · [CHANGELOG](CHANGELOG.md)
 
 ## 作者
 
-由 [Ruofeng Wang（wangruofeng）](https://github.com/wangruofeng) 开发与维护。[GitHub 项目](https://github.com/wangruofeng/imgcompress-mac) · [反馈问题](https://github.com/wangruofeng/imgcompress-mac/issues)
+由 [Ruofeng Wang（wangruofeng）](https://github.com/wangruofeng) 开发与维护。[GitHub 项目](https://github.com/wangruofeng/imgcompress) · [反馈问题](https://github.com/wangruofeng/imgcompress/issues)
 
 ## 开源与来源
 

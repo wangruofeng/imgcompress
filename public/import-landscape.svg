@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 146">
+  <defs>
+    <clipPath id="window"><rect x="49" y="27" width="126" height="77" rx="4"/></clipPath>
+    <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+      <path d="M0 0v5" stroke="#e0cfff" stroke-width="1.3"/>
+    </pattern>
+  </defs>
+  <g transform="rotate(-7 110 72)">
+    <rect x="45" y="22" width="146" height="108" rx="8" fill="#6c5195" opacity=".13"/>
+    <rect x="41" y="18" width="146" height="108" rx="8" fill="#d5c5ed" stroke="#947db3"/>
+    <rect x="39" y="15" width="146" height="108" rx="8" fill="#fbf8ff" stroke="#a490bd"/>
+    <g clip-path="url(#window)">
+      <path fill="#e5daf5" d="M48 26h130v80H48z"/>
+      <circle cx="141" cy="49" r="12" fill="#fffaff"/>
+      <path d="M40 86 87 46q2-2 4 0l24 26 11-10 44 35 12-5v17H40z" fill="#b197d4"/>
+      <path d="m59 72 28-26q2-2 4 0l24 26-21-12-7 3-3-8z" fill="#d6c4eb"/>
+      <path d="M46 85q25-17 53-10t47-1q16-6 35-4v37H46z" fill="#8967b2"/>
+      <path d="M46 89q24 7 51-1t48-2q18 3 36-7v29H46z" fill="#5d4089"/>
+      <path d="M46 93q24 7 51-1t48-2q18 3 36-7v25H46z" fill="url(#hatch)" opacity=".55"/>
+    </g>
+    <g fill="#b29ccf"><circle cx="52" cy="113" r="1.7"/><circle cx="59" cy="113" r="1.7"/><circle cx="66" cy="113" r="1.7"/></g>
+    <path d="M147 113h26" stroke="#c6b5da" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g fill="none" stroke="#8259ba" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m17 40 14 9m-8 1 8-1-2-8M207 97l-14-9m8-1-8 1 2 8"/>
+  </g>
+</svg>

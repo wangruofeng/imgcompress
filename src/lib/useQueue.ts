@@ -134,7 +134,7 @@ export function useQueue() {
         const message = `已保存 1 个 ZIP 压缩包，包含 ${ready.length} 张图片。${skipped ? `${skipped} 张未完成或失败的图片未加入。` : ''}`;
         setNotice(message);
         try { await reveal(path); }
-        catch (error) { setNotice(`${message}自动打开 Finder 失败：${error instanceof Error ? error.message : '请点击文件夹图标查看'}`); }
+        catch (error) { setNotice(`${message}自动打开所在文件夹失败：${error instanceof Error ? error.message : '请点击文件夹图标查看'}`); }
       }
     } catch (error) {
       setNotice(`打包失败：${error instanceof Error ? error.message : '无法保存压缩包'}。已处理图片保留，可以重试。`);

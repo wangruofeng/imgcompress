@@ -24,4 +24,7 @@ export const Desktop = {
   reveal(path: string): Promise<void> {
     return call("Desktop.Reveal", path);
   },
+  saveImage(name: string, mime: string, encoded: string): Promise<string> {
+    return call("Desktop.SaveImage", name, mime, encoded);
+  },
 } as const;

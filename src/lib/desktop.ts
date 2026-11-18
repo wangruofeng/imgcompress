@@ -5,8 +5,8 @@ export const reveal = (path: string) => Desktop.reveal(path);
 export const beginZip = () => Desktop.beginZip();
 export const finishZip = (id: string) => Desktop.finishZip(id);
 export const cancelZip = (id: string) => Desktop.cancelZip(id);
-export async function addToZip(id: string, name: string, blob: Blob): Promise<void> {
-  const encoded = await new Promise<string>((resolve, reject) => {
+function encodeImage(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result !== 'string') reject(new Error('无法读取输出图片'));
@@ -15,5 +15,12 @@ export async function addToZip(id: string, name: string, blob: Blob): Promise<vo
     reader.onerror = () => reject(new Error('无法读取输出图片'));
     reader.readAsDataURL(blob);
   });
-  return Desktop.addZip(id, name, blob.type, encoded);
+}
+
+export async function saveImage(name: string, blob: Blob) {
+  return Desktop.saveImage(name, blob.type, await encodeImage(blob));
+}
+
+export async function addToZip(id: string, name: string, blob: Blob): Promise<void> {
+  return Desktop.addZip(id, name, blob.type, await encodeImage(blob));
 }

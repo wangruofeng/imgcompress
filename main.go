@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/egoist/mygo"
-	"imgcompress-mac/internal/exporter"
+	"imgcompress/internal/exporter"
 )
 
 // Desktop exposes only user-selected output and files saved by this session.
@@ -52,13 +52,34 @@ func (d *Desktop) BeginZip() (string, error) {
 	return d.archiveID, nil
 }
 
-func (d *Desktop) AddZip(id, name, mime, encoded string) error {
+func decodeImage(encoded string) ([]byte, error) {
 	if len(encoded) > (exporter.MaxBytes+2)/3*4 {
-		return errors.New("图片超过 100 MB")
+		return nil, errors.New("图片超过 100 MB")
 	}
 	data, err := base64.StdEncoding.DecodeString(encoded)
 	if err != nil {
-		return errors.New("无法解码图片数据")
+		return nil, errors.New("无法解码图片数据")
+	}
+	return data, nil
+}
+
+func (d *Desktop) SaveImage(name, mime, encoded string) (string, error) {
+	data, err := decodeImage(encoded)
+	if err != nil {
+		return "", err
+	}
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	if d.dir == "" {
+		return "", errors.New("请先选择输出文件夹")
+	}
+	return exporter.Save(d.dir, name, mime, data)
+}
+
+func (d *Desktop) AddZip(id, name, mime, encoded string) error {
+	data, err := decodeImage(encoded)
+	if err != nil {
+		return err
 	}
 	d.mu.Lock()
 	defer d.mu.Unlock()
@@ -126,11 +147,11 @@ func main() {
 						ApplicationName:    "ImgCompress",
 						ApplicationVersion: mygo.App.Version(),
 						Copyright:          "© 2026 Ruofeng Wang",
-						Credits:            "图片轻一点，工作快一点。\n\n作者：Ruofeng Wang（wangruofeng）\nGitHub：https://github.com/wangruofeng/imgcompress-mac",
+						Credits:            "图片轻一点，工作快一点。\n\n作者：Ruofeng Wang（wangruofeng）\nGitHub：https://github.com/wangruofeng/imgcompress",
 					})
 				}},
 				{Label: "在 GitHub 上查看项目…", Click: func(_ *mygo.MenuItem, _ *mygo.Window) {
-					if err := mygo.Shell.OpenExternal("https://github.com/wangruofeng/imgcompress-mac"); err != nil {
+					if err := mygo.Shell.OpenExternal("https://github.com/wangruofeng/imgcompress"); err != nil {
 						log.Println("无法打开 GitHub：", err)
 					}
 				}},
