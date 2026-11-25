@@ -73,6 +73,22 @@ python3 scripts/native-client.py eval scripts/codec-check.js
 swift scripts/render-logo.swift public/logo.svg resources/icon.png
 ```
 
+macOS Dock 使用 `resources/darwin/AppIcon.icns`。它在 1024 × 1024 画布中居中绘制 830 × 830 的图案，四周各留 97 像素透明边。更新 Logo 后可重新生成：
+
+```sh
+icon_workdir=$(mktemp -d)
+mkdir "$icon_workdir/AppIcon.iconset"
+swift scripts/render-logo.swift public/logo.svg "$icon_workdir/icon.png" --macos-dock
+for size in 16 32 128 256 512; do
+  sips -z "$size" "$size" "$icon_workdir/icon.png" \
+    --out "$icon_workdir/AppIcon.iconset/icon_${size}x${size}.png"
+  double_size=$((size * 2))
+  sips -z "$double_size" "$double_size" "$icon_workdir/icon.png" \
+    --out "$icon_workdir/AppIcon.iconset/icon_${size}x${size}@2x.png"
+done
+iconutil -c icns "$icon_workdir/AppIcon.iconset" -o resources/darwin/AppIcon.icns
+```
+
 ## 来源与许可证
 
 基于本地 [ImgCompress](https://img-compress.wangruofeng007.com/) 的 MIT 授权编码方案改编；原始许可见 [LICENSE](../LICENSE)。MyGo 与 SVGO 使用 MIT 许可，@jsquash/webp、@jsquash/avif 使用 Apache-2.0 许可。第三方许可证副本随应用位于 Resources/licenses。
