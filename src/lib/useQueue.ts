@@ -3,7 +3,7 @@ import { createProcessingTimer } from './timing';
 import { createCompressor } from './compress';
 import { resolveParallelism } from './parallelism';
 import { runConcurrent } from './concurrent';
-import { beginZip, addToZip, finishZip, cancelZip, reveal } from './desktop';
+import { beginZip, addToZip, finishZip, cancelZip, reveal, saveImage } from './desktop';
 import { type ImageItem, type Settings } from './types';
 
 function release(item: ImageItem) {
@@ -16,7 +16,7 @@ export function useQueue() {
   const [now,setNow] = useState(0);
   const [items, setItems] = useState<ImageItem[]>([]);
   const [parallelism, setParallelism] = useState(1);
-  const [busy, setBusy] = useState<'process' | 'export' | null>(null);
+  const [busy, setBusy] = useState<'process' | 'export' | 'save' | null>(null);
   const [notice, setNotice] = useState('');
   const [exportProgress, setExportProgress] = useState({ done: 0, total: 0 });
   const current = useRef(items);
@@ -112,32 +112,40 @@ export function useQueue() {
     if (lock.current) return;
     const ready = current.current.filter(row => row.status === 'done' && row.result);
     if (!ready.length) return;
-    lock.current = true; stopped.current = false; setBusy('export'); setNotice('');
+    const single = ready.length === 1;
+    lock.current = true; stopped.current = false; setBusy(single ? 'save' : 'export'); setNotice('');
     setExportProgress({ done: 0, total: ready.length });
     let archiveID: string | undefined;
     try {
-      archiveID = await beginZip();
-      for (let index = 0; index < ready.length; index++) {
-        if (stopped.current) break;
-        const item = ready[index];
-        await addToZip(archiveID, item.file.name, item.result!.blob);
-        setExportProgress({ done: index + 1, total: ready.length });
-      }
-      if (stopped.current) {
-        await cancelZip(archiveID); archiveID = undefined;
-        setNotice('已取消打包，未保存压缩包。已处理图片仍可重新导出。');
+      let path: string;
+      if (single) {
+        const item = ready[0];
+        path = await saveImage(item.file.name, item.result!.blob);
       } else {
-        const path = await finishZip(archiveID); archiveID = undefined;
-        const ids = new Set(ready.map(item => item.id));
-        update(rows => rows.map(item => ids.has(item.id) ? { ...item, savedPath: path } : item));
-        const skipped = current.current.length - ready.length;
-        const message = `已保存 1 个 ZIP 压缩包，包含 ${ready.length} 张图片。${skipped ? `${skipped} 张未完成或失败的图片未加入。` : ''}`;
-        setNotice(message);
-        try { await reveal(path); }
-        catch (error) { setNotice(`${message}自动打开所在文件夹失败：${error instanceof Error ? error.message : '请点击文件夹图标查看'}`); }
+        archiveID = await beginZip();
+        for (let index = 0; index < ready.length; index++) {
+          if (stopped.current) break;
+          const item = ready[index];
+          await addToZip(archiveID, item.file.name, item.result!.blob);
+          setExportProgress({ done: index + 1, total: ready.length });
+        }
+        if (stopped.current) {
+          await cancelZip(archiveID); archiveID = undefined;
+          setNotice('已取消打包，未保存压缩包。已处理图片仍可重新导出。');
+          return;
+        }
+        path = await finishZip(archiveID); archiveID = undefined;
       }
+      const ids = new Set(ready.map(item => item.id));
+      update(rows => rows.map(item => ids.has(item.id) ? { ...item, savedPath: path } : item));
+      const skipped = current.current.length - ready.length;
+      const summary = single ? '已保存 1 张图片。' : `已保存 1 个 ZIP 压缩包，包含 ${ready.length} 张图片。`;
+      const message = summary + (skipped ? `${skipped} 张未完成或失败的图片未导出。` : '');
+      setNotice(message);
+      try { await reveal(path); }
+      catch (error) { setNotice(`${message}自动打开所在文件夹失败：${error instanceof Error ? error.message : '请点击文件夹图标查看'}`); }
     } catch (error) {
-      setNotice(`打包失败：${error instanceof Error ? error.message : '无法保存压缩包'}。已处理图片保留，可以重试。`);
+      setNotice(`${single ? '保存图片失败' : '打包失败'}：${error instanceof Error ? error.message : '无法保存文件'}。已处理图片保留，可以重试。`);
     } finally {
       if (archiveID) {
         try { await cancelZip(archiveID); }

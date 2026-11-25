@@ -4,15 +4,15 @@
 
 一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
 
-## 下载 v0.3.1
+## 下载 v0.3.2
 
 | 平台 | 安装包 |
 | --- | --- |
-| macOS 12+ · Apple Silicon（M 系列） | [下载 ARM64 DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-0.3.1-arm64.dmg) |
-| macOS 12+ · Intel | [下载 Intel DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-0.3.1-amd64.dmg) |
-| Windows x64 · Intel / AMD | [下载 Windows 安装程序](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-setup-0.3.1-amd64.exe) |
+| macOS 12+ · Apple Silicon（M 系列） | [下载 ARM64 DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.2/imgcompress-0.3.2-arm64.dmg) |
+| macOS 12+ · Intel | [下载 Intel DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.2/imgcompress-0.3.2-amd64.dmg) |
+| Windows x64 · Intel / AMD | [下载 Windows 安装程序](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.2/imgcompress-setup-0.3.2-amd64.exe) |
 
-[更新记录](https://github.com/wangruofeng/imgcompress/releases/tag/v0.3.1) · [SHA-256 校验](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/SHA256SUMS.txt)
+[更新记录](https://github.com/wangruofeng/imgcompress/releases/tag/v0.3.2) · [SHA-256 校验](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.2/SHA256SUMS.txt)
 
 Mac 安装包使用 ad-hoc 签名，尚未经过 Apple 公证。Windows 版需要 Microsoft Edge WebView2 Runtime。
 
@@ -23,7 +23,7 @@ Mac 安装包使用 ad-hoc 签名，尚未经过 Apple 公证。Windows 版需�
 - **本地处理，离线可用**：图片无需上传，保留原文件。
 - **七种常用格式**：JPG、PNG、WebP、AVIF，以及 SVG、GIF、APNG 原格式优化。
 - **批量并发，最高 32 路**：支持自动调度与手动选择，展示单张和整批处理耗时。
-- **单张下载或批量导出 ZIP**：重名自动编号，保存后在所在文件夹中定位。
+- **单张直接导出，批量导出 ZIP**：重名自动编号，保存后在所在文件夹中定位。
 - **压缩效果看得见**：逐张查看体积变化，点击图片行，拖动滑杆对比原图与结果。
 - **按需调整**：质量、最大宽度、WebP 无损模式，配合深浅色界面。
 
@@ -31,7 +31,7 @@ Mac 安装包使用 ad-hoc 签名，尚未经过 Apple 公证。Windows 版需�
 
 1. **拖入图片**，也可点击「添加图片」多选，或按 ⌘V（Windows 为 Ctrl+V）粘贴。
 2. **设置并处理**：选择格式、质量与尺寸，点击「开始处理」。大图建议使用 2–4 路并发。
-3. **导出 ZIP**：选择保存文件夹，所有已完成图片打包保存，并自动在所在文件夹中选中。
+3. **导出结果**：只有一张已完成的图片时直接保存图片文件，两张及以上时打包为 ZIP。保存后自动在所在文件夹中选中导出文件。
 
 Mac 用户打开 DMG，将 ImgCompress 拖入 Applications。Windows 用户运行安装程序。
 
