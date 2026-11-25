@@ -4,15 +4,15 @@
 
 一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
 
-## 下载 v0.3.0
+## 下载 v0.3.1
 
 | 平台 | 安装包 |
 | --- | --- |
-| macOS 12+ · Apple Silicon（M 系列） | [下载 ARM64 DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/imgcompress-0.3.0-arm64.dmg) |
-| macOS 12+ · Intel | [下载 Intel DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/imgcompress-0.3.0-amd64.dmg) |
-| Windows x64 · Intel / AMD | [下载 Windows 安装程序](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/imgcompress-setup-0.3.0-amd64.exe) |
+| macOS 12+ · Apple Silicon（M 系列） | [下载 ARM64 DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-0.3.1-arm64.dmg) |
+| macOS 12+ · Intel | [下载 Intel DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-0.3.1-amd64.dmg) |
+| Windows x64 · Intel / AMD | [下载 Windows 安装程序](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-setup-0.3.1-amd64.exe) |
 
-[更新记录](https://github.com/wangruofeng/imgcompress/releases/tag/v0.3.0) · [SHA-256 校验](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.0/SHA256SUMS.txt)
+[更新记录](https://github.com/wangruofeng/imgcompress/releases/tag/v0.3.1) · [SHA-256 校验](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/SHA256SUMS.txt)
 
 Mac 安装包使用 ad-hoc 签名，尚未经过 Apple 公证。Windows 版需要 Microsoft Edge WebView2 Runtime。
 

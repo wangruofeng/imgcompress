@@ -1,5 +1,9 @@
 # 更新日志
 
+## 0.3.1 — 2026-11-25
+
+- 调整 macOS Dock 图标的透明留边，使可见尺寸与常见系统应用图标一致。
+
 ## 0.3.0 — 2026-11-18
 
 - 项目统一命名为 ImgCompress，提供 Apple Silicon、Intel Mac 和 Windows x64 三种独立安装包。
