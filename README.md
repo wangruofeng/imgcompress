@@ -8,6 +8,13 @@
 
 <p align="center">一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。</p>
 
+<p align="center">
+  <a href="https://github.com/wangruofeng/imgcompress/releases/latest"><img src="https://img.shields.io/github/v/release/wangruofeng/imgcompress?label=release&amp;style=flat-square&amp;color=2f6bff" alt="最新版本"></a>
+  <a href="https://github.com/wangruofeng/imgcompress/releases"><img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows-52647d?style=flat-square" alt="支持 macOS 和 Windows"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-238636?style=flat-square" alt="MIT 许可证"></a>
+  <a href="https://github.com/wangruofeng/imgcompress/stargazers"><img src="https://img.shields.io/github/stars/wangruofeng/imgcompress?style=flat-square&amp;color=c58a26" alt="GitHub Stars"></a>
+</p>
+
 ## Mac 宣传片
 
 https://github.com/user-attachments/assets/fc52424c-e7e3-4081-bbf8-8f50037665f0
