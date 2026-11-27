@@ -1,10 +1,12 @@
-<img src="public/logo.svg" alt="ImgCompress Logo" width="96" height="96">
+<p align="center">
+  <img src="public/logo.svg" alt="ImgCompress Logo" width="96" height="96">
+</p>
 
-# ImgCompress
+<h1 align="center">ImgCompress</h1>
 
-**图片轻一点，工作快一点。**
+<p align="center"><strong>图片轻一点，工作快一点。</strong></p>
 
-一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
+<p align="center">一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。</p>
 
 ## Mac 宣传片
 
