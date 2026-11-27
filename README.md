@@ -16,7 +16,9 @@
 
 ## Mac 宣传片
 
-https://github.com/user-attachments/assets/fc52424c-e7e3-4081-bbf8-8f50037665f0
+https://github.com/user-attachments/assets/4f617bfe-404d-443b-b4f4-374a3c46237a
+
+配乐：[《Carefree》](https://www.incompetech.com/music/royalty-free/index.html?isrc=USUAN1400037)（Kevin MacLeod，Incompetech），采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.zh-hans) 授权。已截取片段、调整音量并添加淡入淡出。
 
 ## 下载 v0.3.1
 
