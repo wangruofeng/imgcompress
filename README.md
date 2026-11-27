@@ -67,7 +67,7 @@ SVG、GIF、APNG 不应用格式、质量与尺寸设置，优化后体积可能
 <details>
 <summary>浅色主界面 · 七种格式与并发设置</summary>
 
-![v0.2.4 浅色主界面](docs/screenshots/main-light-v0.2.4.png)
+![ImgCompress 浅色主界面：七种支持格式与并发设置](docs/screenshots/main-light.webp)
 
 </details>
 
@@ -78,7 +78,7 @@ SVG、GIF、APNG 不应用格式、质量与尺寸设置，优化后体积可能
 
 </details>
 
-浅色主界面截图来自 Mac 版 v0.2.4。截图中的压缩比例与耗时仅代表对应样本。
+截图中的压缩比例与耗时仅代表对应样本。
 
 ## 本地开发
 
