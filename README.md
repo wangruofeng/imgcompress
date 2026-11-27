@@ -20,6 +20,8 @@ https://github.com/user-attachments/assets/4f617bfe-404d-443b-b4f4-374a3c46237a
 
 配乐：[《Carefree》](https://www.incompetech.com/music/royalty-free/index.html?isrc=USUAN1400037)（Kevin MacLeod，Incompetech），采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.zh-hans) 授权。已截取片段、调整音量并添加淡入淡出。
 
+[宣传片 HTML 源码](docs/videos/imgcompress-mac-promo.html)
+
 ## 下载 v0.3.1
 
 无需安装 App，也可以直接在浏览器中使用 [ImgCompress 在线版](https://img-compress.wangruofeng007.com/)。
