@@ -1,8 +1,14 @@
+<img src="public/logo.svg" alt="ImgCompress Logo" width="96" height="96">
+
 # ImgCompress
 
 **图片轻一点，工作快一点。**
 
 一款轻量的 macOS 和 Windows 图片压缩与格式转换工具。拖入图片，批量处理，一次导出；图片全程留在你的电脑上，离线可用。
+
+## Mac 宣传片
+
+https://github.com/user-attachments/assets/fc52424c-e7e3-4081-bbf8-8f50037665f0
 
 ## 下载 v0.3.1
 
