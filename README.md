@@ -20,6 +20,8 @@ https://github.com/user-attachments/assets/fc52424c-e7e3-4081-bbf8-8f50037665f0
 
 ## 下载 v0.3.1
 
+无需安装 App，也可以直接在浏览器中使用 [ImgCompress 在线版](https://img-compress.wangruofeng007.com/)。
+
 | 平台 | 安装包 |
 | --- | --- |
 | macOS 12+ · Apple Silicon（M 系列） | [下载 ARM64 DMG](https://github.com/wangruofeng/imgcompress/releases/download/v0.3.1/imgcompress-0.3.1-arm64.dmg) |
