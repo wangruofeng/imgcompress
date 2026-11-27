@@ -74,11 +74,11 @@ SVG、GIF、APNG 不应用格式、质量与尺寸设置，优化后体积可能
 <details>
 <summary>原图与处理结果对比</summary>
 
-![v0.2.4 图片处理前后对比](docs/screenshots/preview-dark-v0.2.4.png)
+![ImgCompress 原图与处理结果对比：519.8 KB 压缩至 371.1 KB](docs/screenshots/preview-comparison-light.webp)
 
 </details>
 
-折叠区展示 v0.2.4 的 Mac 界面。截图中的压缩比例与耗时仅代表对应样本。
+浅色主界面截图来自 Mac 版 v0.2.4。截图中的压缩比例与耗时仅代表对应样本。
 
 ## 本地开发
 
