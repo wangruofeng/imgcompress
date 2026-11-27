@@ -1,8 +1,7 @@
-<p align="center">
-  <img src="public/logo.svg" alt="ImgCompress Logo" width="96" height="96">
-</p>
-
-<h1 align="center">ImgCompress</h1>
+<h1 align="center">
+  <img src="public/logo.svg" alt="ImgCompress Logo" width="96" height="96"><br>
+  ImgCompress
+</h1>
 
 <p align="center"><strong>图片轻一点，工作快一点。</strong></p>
 
