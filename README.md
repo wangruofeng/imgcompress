@@ -12,7 +12,6 @@
   <a href="https://github.com/wangruofeng/imgcompress/releases/latest"><img src="https://img.shields.io/github/v/release/wangruofeng/imgcompress?label=release&amp;style=flat-square&amp;color=2f6bff" alt="最新版本"></a>
   <a href="https://github.com/wangruofeng/imgcompress/releases"><img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows-52647d?style=flat-square" alt="支持 macOS 和 Windows"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-238636?style=flat-square" alt="MIT 许可证"></a>
-  <a href="https://github.com/wangruofeng/imgcompress/stargazers"><img src="https://img.shields.io/github/stars/wangruofeng/imgcompress?style=flat-square&amp;color=c58a26" alt="GitHub Stars"></a>
 </p>
 
 ## Mac 宣传片
