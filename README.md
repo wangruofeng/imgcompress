@@ -103,7 +103,7 @@ npm run build
 
 ## 作者
 
-由 [Ruofeng Wang（wangruofeng）](https://github.com/wangruofeng) 开发与维护。[GitHub 项目](https://github.com/wangruofeng/imgcompress) · [反馈问题](https://github.com/wangruofeng/imgcompress/issues)
+由 [Ruofeng Wang（wangruofeng）](https://github.com/wangruofeng) 开发与维护。[X @oneruofeng](https://x.com/oneruofeng) · [GitHub 项目](https://github.com/wangruofeng/imgcompress) · [反馈问题](https://github.com/wangruofeng/imgcompress/issues)
 
 ## 开源与来源
 
